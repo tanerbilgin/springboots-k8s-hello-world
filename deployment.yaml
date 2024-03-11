@@ -19,7 +19,7 @@ spec:
       - name: hello-world
         image: tnrbilgn/case:1
         ports:
-        - containerPort: 8080
+        - containerPort: 8181
         resources:
           limits:
             memory: 256Mi
