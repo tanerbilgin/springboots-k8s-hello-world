@@ -1,0 +1,43 @@
+pipeline {
+    agent any
+
+
+    stages {
+        stage('Git Clone') {
+            steps {
+                script {
+                    sh "git clone https://github.com/tanerbilgin/springboots-k8s-hello-world.git ."
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    // Build adımlarınız (örneğin, Maven build)
+                    sh 'mvn clean install'
+                }
+            }
+        }
+
+        stage('Docker İmajını Oluştur ve Gönder') {
+            steps {
+                script {
+                    // Docker imajı oluşturma ve gönderme adımlarınız
+                    sh 'docker build -t case:latest .'
+                    sh 'docker push your-docker-registry/your-app:latest'
+                }
+            }
+        }
+
+        stage('Kubernetes'e Dağıt') {
+            steps {
+                script {
+                    // Kubernetes dağıtım adımlarınız
+                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'kubectl apply -f service.yaml'
+                }
+            }
+        }
+    }
+}
